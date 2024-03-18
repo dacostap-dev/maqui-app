@@ -1,19 +1,21 @@
-class TimeModel {
-  int year;
-  int month;
-  int day;
-  int hour;
-  int minute;
-  int seconds;
-  int milliSeconds;
-  DateTime dateTime;
-  String date;
-  String time;
-  String timeZone;
-  String dayOfWeek;
-  bool dstActive;
+import 'package:equatable/equatable.dart';
 
-  TimeModel({
+class TimeModel extends Equatable {
+  final int year;
+  final int month;
+  final int day;
+  final int hour;
+  final int minute;
+  final int seconds;
+  final int milliSeconds;
+  final DateTime dateTime;
+  final String date;
+  final String time;
+  final String timeZone;
+  final String dayOfWeek;
+  final bool dstActive;
+
+  const TimeModel({
     required this.year,
     required this.month,
     required this.day,
@@ -44,4 +46,21 @@ class TimeModel {
         dayOfWeek: json["dayOfWeek"],
         dstActive: json["dstActive"],
       );
+
+  @override
+  List<Object?> get props => [
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        seconds,
+        milliSeconds,
+        dateTime,
+        date,
+        time,
+        timeZone,
+        dayOfWeek,
+        dstActive,
+      ];
 }

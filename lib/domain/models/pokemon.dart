@@ -1,10 +1,12 @@
-class PokemonResponse {
-  int count;
-  String next;
-  String? previous;
-  List<Pokemon> results;
+import 'package:equatable/equatable.dart';
 
-  PokemonResponse({
+class PokemonResponse extends Equatable {
+  final int count;
+  final String next;
+  final String? previous;
+  final List<Pokemon> results;
+
+  const PokemonResponse({
     required this.count,
     required this.next,
     this.previous,
@@ -20,13 +22,16 @@ class PokemonResponse {
           json["results"].map((x) => Pokemon.fromJson(x)),
         ),
       );
+
+  @override
+  List<Object?> get props => [count, next, previous, results];
 }
 
-class Pokemon {
-  String name;
-  String url;
+class Pokemon extends Equatable {
+  final String name;
+  final String url;
 
-  Pokemon({
+  const Pokemon({
     required this.name,
     required this.url,
   });
@@ -35,4 +40,7 @@ class Pokemon {
         name: json["name"],
         url: json["url"],
       );
+
+  @override
+  List<Object?> get props => [name, url];
 }

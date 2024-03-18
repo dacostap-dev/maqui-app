@@ -1,4 +1,6 @@
-class PokemonDetail {
+import 'package:equatable/equatable.dart';
+
+class PokemonDetail extends Equatable {
   final int baseExperience;
   final int height;
   final int id;
@@ -8,7 +10,7 @@ class PokemonDetail {
   final int weight;
   final List<PokemonType> types;
 
-  PokemonDetail({
+  const PokemonDetail({
     required this.baseExperience,
     required this.height,
     required this.id,
@@ -31,26 +33,37 @@ class PokemonDetail {
           json["types"].map((x) => PokemonType.fromJson(x)),
         ),
       );
+
+  @override
+  // TODO: implement props
+  List<Object?> get props =>
+      [baseExperience, height, id, isDefault, name, order, weight, types];
 }
 
-class PokemonType {
+class PokemonType extends Equatable {
   final Type type;
 
-  PokemonType({
+  const PokemonType({
     required this.type,
   });
 
   factory PokemonType.fromJson(Map<String, dynamic> json) => PokemonType(
         type: Type.fromJson(json["type"]),
       );
+
+  @override
+  List<Object?> get props => [type];
 }
 
-class Type {
+class Type extends Equatable {
   final String name;
 
-  Type({required this.name});
+  const Type({required this.name});
 
   factory Type.fromJson(Map<String, dynamic> json) => Type(
         name: json["name"],
       );
+
+  @override
+  List<Object?> get props => [name];
 }
