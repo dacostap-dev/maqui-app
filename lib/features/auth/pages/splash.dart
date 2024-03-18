@@ -6,6 +6,8 @@ import 'package:maqui/features/auth/bloc/splash_bloc.dart';
 import 'package:maqui/features/widgets/custom_cached_network_image.dart';
 
 class SplashPage extends StatefulWidget {
+  static const String route = 'splash';
+
   const SplashPage({super.key});
 
   @override
