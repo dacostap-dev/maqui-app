@@ -5,7 +5,7 @@ import 'package:maqui/features/pokemon/pages/pokemons.dart';
 
 Route onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
-    case '/':
+    case SplashPage.route:
       return MaterialPageRoute(builder: (_) => const SplashPage());
     case PokemonsPage.route:
       return MaterialPageRoute(builder: (_) => const PokemonsPage());

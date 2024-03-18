@@ -7,6 +7,7 @@ import 'package:maqui/data/repository/time_repository_impl.dart';
 import 'package:maqui/domain/respitory/pokemon_repository.dart';
 import 'package:maqui/domain/respitory/time_repository.dart';
 import 'package:maqui/features/auth/bloc/splash_bloc.dart';
+import 'package:maqui/features/auth/pages/splash.dart';
 import 'package:maqui/features/pokemon/bloc/pokemon_bloc.dart';
 
 void main() {
@@ -46,8 +47,8 @@ class MyApp extends StatelessWidget {
       child: BlocListener<SplashBloc, SplashState>(
         listener: (context, state) {
           (switch (state) {
-            SplashComplete() =>
-              _navigatorKey.currentState?.pushNamed('pokemons'),
+            SplashComplete() => _navigatorKey.currentState
+                ?.pushNamedAndRemoveUntil('pokemons', (route) => false),
             _ => null
           });
         },
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          initialRoute: 'pokemons',
+          initialRoute: SplashPage.route,
           onGenerateRoute: onGenerateRoute,
         ),
       ),

@@ -50,7 +50,7 @@ class _PokemonsPageState extends State<PokemonsPage> {
 
       if (maxScroll == currentScroll) {
         print('load-more');
-        context.read<PokemonBloc>().add(PokemonEvent.getMorePokemons());
+        context.read<PokemonBloc>().add(PokemonEvent.getPokemons());
       }
     }
   }

@@ -1,11 +1,12 @@
 class PokemonDetail {
-  int baseExperience;
-  int height;
-  int id;
-  bool isDefault;
-  String name;
-  int order;
-  int weight;
+  final int baseExperience;
+  final int height;
+  final int id;
+  final bool isDefault;
+  final String name;
+  final int order;
+  final int weight;
+  final List<PokemonType> types;
 
   PokemonDetail({
     required this.baseExperience,
@@ -15,6 +16,7 @@ class PokemonDetail {
     required this.name,
     required this.order,
     required this.weight,
+    required this.types,
   });
 
   factory PokemonDetail.fromJson(Map<String, dynamic> json) => PokemonDetail(
@@ -25,5 +27,30 @@ class PokemonDetail {
         name: json["name"],
         order: json["order"],
         weight: json["weight"],
+        types: List<PokemonType>.from(
+          json["types"].map((x) => PokemonType.fromJson(x)),
+        ),
+      );
+}
+
+class PokemonType {
+  final Type type;
+
+  PokemonType({
+    required this.type,
+  });
+
+  factory PokemonType.fromJson(Map<String, dynamic> json) => PokemonType(
+        type: Type.fromJson(json["type"]),
+      );
+}
+
+class Type {
+  final String name;
+
+  Type({required this.name});
+
+  factory Type.fromJson(Map<String, dynamic> json) => Type(
+        name: json["name"],
       );
 }

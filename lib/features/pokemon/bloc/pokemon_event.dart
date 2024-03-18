@@ -5,6 +5,8 @@ sealed class PokemonEvent extends Equatable {
 
   factory PokemonEvent.getPokemons() => GetPokemons();
   factory PokemonEvent.getMorePokemons() => GetMorePokemons();
+  factory PokemonEvent.getPokemonDetail({required String id}) =>
+      GetPokemonDetail(id: id);
 
   @override
   List<Object> get props => [];

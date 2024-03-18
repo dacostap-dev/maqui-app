@@ -15,7 +15,6 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
 
   PokemonBloc(this._pokemonRepository) : super(PokemonInitial()) {
     on<GetPokemons>(_getPokemons);
-    on<GetMorePokemons>(_getMorePokemons);
     on<FilterPokemons>(_filterPokemons);
     on<GetPokemonDetail>(_getPokemonDetail);
   }
@@ -24,41 +23,17 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
       state is PokemonLoaded && state.hasReachedMax;
 
   _getPokemons(GetPokemons event, Emitter<PokemonState> emitter) async {
-    emitter(PokemonLoading());
-
-    final res = await _pokemonRepository.getPokemons();
-
-    res.fold(
-      (l) => emitter(PokemonLoadFailed(message: l.message)),
-      (response) {
-        if (response.results.isEmpty) {
-          return emitter(
-            PokemonLoaded(
-              pokemons: pokemons,
-              hasReachedMax: true,
-            ),
-          );
-        }
-
-        pokemons.addAll(response.results);
-        emitter(PokemonLoaded(pokemons: pokemons));
-      },
-    );
-  }
-
-  _getMorePokemons(GetMorePokemons event, Emitter<PokemonState> emitter) async {
     if (_hasReachedMax(state)) return;
 
-    emitter(PokemonExtraLoading());
+    pokemons.isEmpty
+        ? emitter(PokemonLoading())
+        : emitter(PokemonExtraLoading());
 
     final res = await _pokemonRepository.getPokemons(offset: pokemons.length);
 
-    print(res);
-
     res.fold(
       (l) => emitter(PokemonLoadFailed(message: l.message)),
       (response) {
-        print('1');
         if (response.results.isEmpty) {
           return emitter(
             PokemonLoaded(
@@ -70,8 +45,6 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
 
         pokemons.addAll(response.results);
         emitter(PokemonLoaded(pokemons: pokemons));
-
-        print('2');
       },
     );
   }
@@ -81,8 +54,11 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
         .filter((pokemon) => pokemon.name.contains(event.search))
         .toList();
 
-    emitter(PokemonLoaded(
-        pokemons: event.search.length < 3 ? pokemons : pokemonsFilteres));
+    emitter(
+      PokemonLoaded(
+          pokemons: event.search.length < 3 ? pokemons : pokemonsFilteres,
+          hasReachedMax: event.search.length < 3 ? false : true),
+    );
   }
 
   _getPokemonDetail(
